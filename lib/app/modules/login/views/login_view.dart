@@ -25,7 +25,7 @@ class LoginView extends GetView<LoginController> {
               ),
             ),
             Text(
-              'LOGIN',
+              'LOGIN/MASUK',
               style: GoogleFonts.roboto(
                 textStyle: const TextStyle(
                   fontWeight: FontWeight.bold,
@@ -37,7 +37,12 @@ class LoginView extends GetView<LoginController> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.only(
+                left: 50.0,
+                right: 50.0,
+                top: 15,
+                bottom: 0,
+              ),
               child: TextField(
                 controller: controller.emailController,
                 decoration: const InputDecoration(
@@ -49,8 +54,8 @@ class LoginView extends GetView<LoginController> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                left: 15.0,
-                right: 15.0,
+                left: 50.0,
+                right: 50.0,
                 top: 15,
                 bottom: 0,
               ),
@@ -71,8 +76,8 @@ class LoginView extends GetView<LoginController> {
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(20),
+                color: Color.fromARGB(255, 46, 122, 53),
+                borderRadius: BorderRadius.circular(5),
               ),
               child: TextButton(
                 onPressed: () {
@@ -82,6 +87,7 @@ class LoginView extends GetView<LoginController> {
                   'Login',
                   style: TextStyle(
                     color: Colors.white,
+                    fontWeight: FontWeight.w500,
                     fontSize: 25,
                   ),
                 ),

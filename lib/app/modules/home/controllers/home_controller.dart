@@ -14,11 +14,11 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     _pindah = Timer.periodic(
-      const Duration(seconds: 4),
+      const Duration(seconds: 3),
         (timer) => authToken.read('token') == null
             ? Get.off(
                 () => const LoginView(),
-                transition: Transition.leftToRight,
+                transition: Transition.fade,
               )
       : Get.off(() => const DashboardView()),
     );

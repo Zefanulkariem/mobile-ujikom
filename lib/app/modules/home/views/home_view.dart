@@ -23,18 +23,6 @@ class HomeView extends GetView<HomeController> {
               width: 200, // Sesuaikan ukuran jika perlu
               height: 200,
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            Text(
-              'Pusat Usaha Bersama dan Kemitraan',
-              style: GoogleFonts.roboto(
-                textStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
           ],
         ),
       ),
