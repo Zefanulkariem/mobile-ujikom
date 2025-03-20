@@ -25,11 +25,20 @@ class LoginView extends GetView<LoginController> {
               ),
             ),
             Text(
-              'LOGIN/MASUK',
+              'MASUK',
               style: GoogleFonts.roboto(
                 textStyle: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
+                ),
+              ),
+            ),
+            Text(
+              'Silakan login untuk melanjutkan akses Anda.',
+              style: GoogleFonts.roboto(
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 15,
                 ),
               ),
             ),

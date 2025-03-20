@@ -1,23 +1,27 @@
 class OperasionalResponse {
   final bool success;
-  final Data? data;
+  final List<Data>? data; // Ubah Data? menjadi List<Data>? untuk daftar operasional
 
   OperasionalResponse({required this.success, this.data});
 
   factory OperasionalResponse.fromJson(Map<String, dynamic> json) {
     return OperasionalResponse(
       success: json['success'],
-      data: json['data'] != null ? Data.fromJson(json['data']) : null,
+      data: json['data'] != null
+          ? List<Data>.from(json['data'].map((x) => Data.fromJson(x)))
+          : null, // Ubah cara parsing data
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'success': success,
-      'data': data?.toJson(),
+      'data': data != null ? List<dynamic>.from(data!.map((x) => x.toJson())) : null,
     };
   }
 }
+
+// Data dan User class tetap sama
 
 class Data {
   final int id;

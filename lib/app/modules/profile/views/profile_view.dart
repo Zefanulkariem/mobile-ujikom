@@ -15,7 +15,7 @@ class ProfileView extends GetView<ProfileController> {
       ),
       body: const Center(
         child: Text(
-          'ProfileView is working',
+          'ProfileView is working cuy',
           style: TextStyle(fontSize: 20),
         ),
       ),
