@@ -15,98 +15,129 @@ class LoginView extends GetView<LoginController> {
       backgroundColor: HexColor('#ffff'),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, // Pastikan semua teks rata kiri
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 70.0),
-              child: Image.asset(
-                'assets/images/PUBK_logo.png', // Ganti dengan path gambar lokal
-                width: 200, // Sesuaikan ukuran jika perlu
-                height: 200,
-              ),
-            ),
-            Text(
-              'MASUK',
-              style: GoogleFonts.roboto(
-                textStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                ),
-              ),
-            ),
-            Text(
-              'Silakan login untuk melanjutkan akses Anda.',
-              style: GoogleFonts.roboto(
-                textStyle: const TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 50.0,
-                right: 50.0,
-                top: 15,
-                bottom: 0,
-              ),
-              child: TextField(
-                controller: controller.emailController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email',
-                  hintText: 'Masukan Email',
+              child: Center( // Logo tetap di tengah
+                child: Image.asset(
+                  'assets/images/PUBK_logo.png',
+                  width: 200,
+                  height: 200,
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                left: 50.0,
-                right: 50.0,
-                top: 15,
-                bottom: 0,
-              ),
-              child: TextField(
-                controller: controller.passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                  hintText: 'Masukan Password',
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 50,
-              width: 250,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 46, 122, 53),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: TextButton(
-                onPressed: () {
-                  controller.loginNow();
-                },
-                child: const Text(
-                  'Login',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 25,
+              padding: const EdgeInsets.symmetric(horizontal: 50.0), 
+              child: Text(
+                'Masuk',
+                style: GoogleFonts.openSans(
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
                   ),
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              child: Text(
+                'Silakan login untuk melanjutkan akses Anda.',
+                style: GoogleFonts.openSans(
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
             ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              child: Text(
+                'Alamat Email:',
+                style: GoogleFonts.openSans(
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 15),
+              child: SizedBox(
+                width: double.infinity,
+                child: TextField(
+                  controller: controller.emailController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Masukkan Email',
+                    hintText: 'Masukkan Email',
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              child: Text(
+                'Kata Sandi:',
+                style: GoogleFonts.openSans(
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 15),
+              child: SizedBox(
+                width: double.infinity,
+                child: TextField(
+                  controller: controller.passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Masukkan Kata Sandi',
+                    hintText: 'Masukkan Kata Sandi',
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              child: SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 46, 122, 53),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () {
+                    controller.loginNow();
+                  },
+                  child: Text(
+                    'Masuk',
+                    style: GoogleFonts.openSans(
+                      textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
           ],
-        ),
+        )
       ),
     );
   }

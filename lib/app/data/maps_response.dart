@@ -1,11 +1,16 @@
 class MapsResponse {
   String? status;
+  int? jmlUserUmkm;
+  int? jmlLokasiUmkm;
   List<UMKMData>? data;
 
-  MapsResponse({this.status, this.data});
+  MapsResponse({this.status, this.jmlUserUmkm, this.jmlLokasiUmkm, this.data});
 
   MapsResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
+    jmlUserUmkm = json['jmlUserUmkm'];
+    jmlLokasiUmkm = json['jmlLokasiUmkm'];
+
     if (json['data'] != null) {
       data = <UMKMData>[];
       json['data'].forEach((v) {
@@ -17,6 +22,8 @@ class MapsResponse {
   Map<String, dynamic> toJson() {
     return {
       'status': status,
+      'jmlUserUmkm': jmlUserUmkm,
+      'jmlLokasiUmkm': jmlLokasiUmkm,
       'data': data?.map((v) => v.toJson()).toList(),
     };
   }

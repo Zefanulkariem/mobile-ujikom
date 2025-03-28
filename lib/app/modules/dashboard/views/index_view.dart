@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pubk_mobile2/app/modules/maps/controllers/maps_controller.dart';
 
-class IndexView extends GetView {
+class IndexView extends GetView<MapsController> {
   const IndexView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final MapsController controller = Get.put(MapsController());
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: const Text('Dasbor'),
         centerTitle: true,
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
+            const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Color.fromARGB(255, 46, 122, 53),
               ),
               child: Text(
                 'Menu',
@@ -28,22 +32,19 @@ class IndexView extends GetView {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Beranda'),
+              leading: const Icon(Icons.home),
+              title: const Text('Beranda'),
               onTap: () {
-                // Tambahkan logika navigasi di sini
                 Get.back(); // Tutup drawer
               },
             ),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Pengaturan'),
+              leading: const Icon(Icons.settings),
+              title: const Text('Pengaturan'),
               onTap: () {
-                // Tambahkan logika navigasi di sini
                 Get.back(); // Tutup drawer
               },
             ),
-            // Tambahkan item menu lainnya di sini
           ],
         ),
       ),
@@ -53,83 +54,98 @@ class IndexView extends GetView {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Selamat Datang!',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+              'SELAMAT DATANG KEMBALI!',
+              style: GoogleFonts.openSans(
+                  textStyle: const TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 17,
+              )),
+              textAlign: TextAlign.start,
             ),
-            SizedBox(height: 20),
+            Text(
+              'Sample Investor',
+              style: GoogleFonts.openSans(
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+              textAlign: TextAlign.start,
+            ),
+            const SizedBox(height: 20),
             GridView.count(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
               children: <Widget>[
-                _buildDashboardCard(
-                  title: 'Total Pengguna',
-                  icon: Icons.people,
-                  value: '100',
-                  onTap: () {
-                    // Tambahkan aksi ketika card ditekan
-                    print('Total Pengguna Ditekan');
-                  },
-                ),
-                _buildDashboardCard(
-                  title: 'Produk Terjual',
-                  icon: Icons.shopping_cart,
-                  value: '500',
-                  onTap: () {
-                    // Tambahkan aksi ketika card ditekan
-                    print('Produk Terjual Ditekan');
-                  },
-                ),
-                _buildDashboardCard(
-                  title: 'Pendapatan',
-                  icon: Icons.monetization_on,
-                  value: 'Rp 1.000.000',
-                  onTap: () {
-                    // Tambahkan aksi ketika card ditekan
-                    print('Pendapatan Ditekan');
-                  },
-                ),
+                Obx(() => _buildDashboardCard(
+                      title: 'Jumlah UMKM Saat Ini',
+                      icon: Icons.location_on,
+                      value: controller.jmlLokasiUmkm.toString(),
+                      onTap: () {
+                        // Tambahkan aksi ketika card ditekan
+                        print('Jumlah UMKM Ditekan');
+                      },
+                    )),
+                Obx(() => _buildDashboardCard(
+                      title: 'Total Pemilik UMKM Saat Ini',
+                      icon: Icons.shopping_cart,
+                      value: controller.jmlUserUmkm.toString(),
+                      onTap: () {
+                        // Tambahkan aksi ketika card ditekan
+                        print('Total Pemilik UMKM Ditekan');
+                      },
+                    )),
+                // _buildDashboardCard(
+                //   title: 'Pendapatan',
+                //   icon: Icons.monetization_on,
+                //   value: 'Rp 1.000.000',
+                //   onTap: () {
+                //     // Tambahkan aksi ketika card ditekan
+                //     print('Pendapatan Ditekan');
+                //   },
+                // ),
                 // Tambahkan card-card lain sesuai kebutuhan
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Grafik Penjualan',
+                      'Daftar Jadwal Meeting',
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10),
                     // Di sini Anda bisa menambahkan widget untuk menampilkan grafik
                     // Contoh: Placeholder untuk grafik
-                    Container(
-                      height: 200,
-                      color: Colors.grey[200],
-                      child: Center(
-                        child: Text('Grafik akan ditampilkan di sini'),
-                      ),
-                    ),
+                    // Container(
+                    //   height: 200,
+                    //   color: Colors.grey[200],
+                    //   child: Center(
+                    //     child: Text('Grafik akan ditampilkan di sini'),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
-              'Footer Dashboard',
-              style: TextStyle(color: Colors.grey),
+              "© Pusat Usaha Bersama dan Kemitraan ${DateTime.now().year}. All rights reserved.",
               textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+              selectionColor: Colors.grey,
             ),
           ],
         ),
@@ -157,18 +173,20 @@ class IndexView extends GetView {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(icon, size: 40, color: Colors.blue),
-              SizedBox(height: 10),
+              Icon(icon,
+                  size: 40, color: const Color.fromARGB(255, 46, 122, 53)),
+              const SizedBox(height: 10),
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(
                 value,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14),
               ),
             ],
           ),
