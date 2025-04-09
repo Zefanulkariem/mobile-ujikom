@@ -8,14 +8,15 @@ class MeetingController extends GetxController {
   var meetingList = <Map<String, dynamic>>[].obs;
   final String? token = GetStorage().read('token'); //cek null
   var isLoading = false.obs;
+  var userName = ''.obs;
 
   @override
-  void onInit() { 
+  void onInit() {
+    getMeetings(); 
     super.onInit();
-    fetchMeetings(); // Auto-fetch
   }
 
-  Future<void> fetchMeetings() async {
+  Future<void> getMeetings() async {
     if (token == null) {
       print("TOKEN KOSONG! Cek apakah sudah login.");
       return;
@@ -23,7 +24,7 @@ class MeetingController extends GetxController {
 
     try {
       isLoading.value = true;
-      // Cek apakah token ada
+      // Cek token
       print("Fetching data meetings...");
       print("Base URL: ${BaseUrl.meeting}");
       print("Token yang diambil di fetchMeetings() ke MEETING: $token");
@@ -44,9 +45,16 @@ class MeetingController extends GetxController {
         try {
           var jsonData = jsonDecode(response.body);
 
-          if (jsonData is Map && jsonData.containsKey("data")) {
-            meetingList.assignAll((jsonData["data"] as List).cast<Map<String, dynamic>>());
-            print("Data meeting berhasil dimuat: ${meetingList.length} item");
+          if (jsonData is Map) {
+            if (jsonData.containsKey("name")) {
+              userName.value = jsonData["name"];
+              print("Data username berhasil dimuat: ${userName.value}");
+            }
+
+            if (jsonData.containsKey("data")) {
+              meetingList.assignAll((jsonData["data"] as List).cast<Map<String, dynamic>>());
+              print("Data meeting berhasil dimuat: ${meetingList.length} item");
+            }
           } else {
             print("Format data tidak sesuai: $jsonData");
           }

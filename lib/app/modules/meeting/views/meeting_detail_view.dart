@@ -10,21 +10,30 @@ class MeetingDetailView extends GetView<MeetingController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(meeting['title'] ?? "Detail Meeting")),
+      appBar: AppBar(
+        title: const Text("Detail Meeting")
+        ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Judul: ${meeting['title'] ?? '-'}",
+            // judul
+            Text("Judul: ${meeting['judul'] ?? '-'}",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
-            Text("Tanggal: ${meeting['date'] ?? '-'}",
+            Text("Tanggal: ${meeting['tanggal'] ?? '-'}",
                 style: TextStyle(fontSize: 16)),
             SizedBox(height: 10),
-            Text("Deskripsi:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            // lokasi
+            Text("Lokasi:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             SizedBox(height: 5),
-            Text(meeting['description'] ?? "Tidak ada deskripsi."),
+            Text(meeting['lokasi_meeting'] ?? "Tidak ada lokasi."),
+            SizedBox(height: 10),
+            // pengaju
+            Text("Di Ajukan oleh:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            SizedBox(height: 5),
+            Obx(() => Text(controller.userName.value.isEmpty ? "Loading..." : controller.userName.value)),
           ],
         ),
       ),

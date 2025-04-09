@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pubk_mobile2/app/modules/maps/controllers/maps_controller.dart';
+import 'package:pubk_mobile2/app/modules/meeting/controllers/meeting_controller.dart';
 
-class IndexView extends GetView<MapsController> {
-  const IndexView({super.key});
+class IndexView extends GetView<MeetingController> {
+  // final Map<String, dynamic> meeting;
+  const IndexView({super.key, // required this.meeting
+  });
 
   @override
   Widget build(BuildContext context) {
-    final MapsController controller = Get.put(MapsController());
+    final MapsController controllerMaps = Get.put(MapsController());
+    final MeetingController controllerMeet = Get.put(MeetingController());
 
     return Scaffold(
       appBar: AppBar(
@@ -24,7 +28,7 @@ class IndexView extends GetView<MapsController> {
                 color: Color.fromARGB(255, 46, 122, 53),
               ),
               child: Text(
-                'Menu',
+                'PUBK - Menu',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -62,16 +66,18 @@ class IndexView extends GetView<MapsController> {
               )),
               textAlign: TextAlign.start,
             ),
-            Text(
-              'Sample Investor',
-              style: GoogleFonts.openSans(
-                textStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ),
-              textAlign: TextAlign.start,
-            ),
+            Obx(() => Text(
+                  controllerMeet.userName.value.isEmpty
+                      ? "Loading..."
+                      : controllerMeet.userName.value,
+                  style: GoogleFonts.openSans(
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
+                  ),
+                  textAlign: TextAlign.start,
+                )),
             const SizedBox(height: 20),
             GridView.count(
               shrinkWrap: true,
@@ -83,7 +89,7 @@ class IndexView extends GetView<MapsController> {
                 Obx(() => _buildDashboardCard(
                       title: 'Jumlah UMKM Saat Ini',
                       icon: Icons.location_on,
-                      value: controller.jmlLokasiUmkm.toString(),
+                      value: controllerMaps.jmlLokasiUmkm.toString(),
                       onTap: () {
                         // Tambahkan aksi ketika card ditekan
                         print('Jumlah UMKM Ditekan');
@@ -92,7 +98,7 @@ class IndexView extends GetView<MapsController> {
                 Obx(() => _buildDashboardCard(
                       title: 'Total Pemilik UMKM Saat Ini',
                       icon: Icons.shopping_cart,
-                      value: controller.jmlUserUmkm.toString(),
+                      value: controllerMaps.jmlUserUmkm.toString(),
                       onTap: () {
                         // Tambahkan aksi ketika card ditekan
                         print('Total Pemilik UMKM Ditekan');
@@ -111,35 +117,47 @@ class IndexView extends GetView<MapsController> {
               ],
             ),
             const SizedBox(height: 20),
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Daftar Jadwal Meeting',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    // Di sini Anda bisa menambahkan widget untuk menampilkan grafik
-                    // Contoh: Placeholder untuk grafik
-                    // Container(
-                    //   height: 200,
-                    //   color: Colors.grey[200],
-                    //   child: Center(
-                    //     child: Text('Grafik akan ditampilkan di sini'),
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ),
-            ),
+            // Card(
+            //   elevation: 4,
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(10),
+            //   ),
+            //   child: Padding(
+            //     padding: EdgeInsets.all(16.0),
+            //     child: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         const Text(
+            //           'Daftar Jadwal Meeting',
+            //           style:
+            //               TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            //         ),
+            //         const SizedBox(height: 10),
+            //         // Di sini Anda bisa menambahkan widget untuk menampilkan grafik
+            //         // Contoh: Placeholder untuk grafik
+            //         Container(
+            //           height: 200,
+            //           // color: Colors.grey[200],
+            //           child: Column(
+            //             children: [
+            //               Text("Judul: ${meeting['judul'] ?? '-'}",
+            //                   style: const TextStyle(
+            //                       fontSize: 16, fontWeight: FontWeight.bold)),
+            //               const SizedBox(height: 10),
+            //               Text("Tanggal: ${meeting['tanggal'] ?? '-'}",
+            //                   style: const TextStyle(fontSize: 16)),
+            //               const SizedBox(height: 10),
+            //               Text("Lokasi: ${meeting['lokasi_meeting'] ?? '-'}",
+            //                   style: const TextStyle(
+            //                       fontSize: 16, fontWeight: FontWeight.bold)),
+            //               // const SizedBox(height: 5),
+            //             ],
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 20),
             Text(
               "© Pusat Usaha Bersama dan Kemitraan ${DateTime.now().year}. All rights reserved.",

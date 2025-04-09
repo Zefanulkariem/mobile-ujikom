@@ -17,18 +17,18 @@ class LoginController extends GetxController {
       'password': passwordController.text,
     });
 
-    print("Response dari API: ${response.body}"); // Tambahin ini
+    print("Response dari API: ${response.body}");
 
     if (response.statusCode == 200) {
-      String token = response.body['access_token']; // Ambil dari key yang benar
+      String token = response.body['access_token'];
       authToken.write('token', token);
-      print("Token setelah login: ${GetStorage().read('token')}");// Cek token beneran ada atau nggak
+      print("Token setelah login: ${GetStorage().read('token')}");// Cek token 
       Get.offAll(() => const DashboardView());
     } else {
       print("Gagal login: ${response.body}");
       Get.snackbar(
-        'Error',
-        response.body['error'].toString(),
+        'Terjadi Kesalahan',
+        'Harap isi data dengan benar',
         icon: const Icon(Icons.error),
         backgroundColor: Colors.red,
         colorText: Colors.white,

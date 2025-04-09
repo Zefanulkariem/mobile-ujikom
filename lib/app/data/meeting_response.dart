@@ -1,14 +1,16 @@
 class MeetingResponse {
   bool? success;
   String? message;
+  String? name;
   List<MeetingData>? data;
 
-  MeetingResponse({this.success, this.message, this.data});
+  MeetingResponse({this.success, this.message, this.name, this.data});
 
   factory MeetingResponse.fromJson(Map<String, dynamic> json) {
     return MeetingResponse(
       success: json['success'],
       message: json['message'],
+      name: json['name'],
       data: (json['data'] as List?)
           ?.map((item) => MeetingData.fromJson(item))
           .toList(),
@@ -19,6 +21,7 @@ class MeetingResponse {
     return {
       'success': success,
       'message': message,
+      'name': name,
       'data': data?.map((item) => item.toJson()).toList(),
     };
   }
