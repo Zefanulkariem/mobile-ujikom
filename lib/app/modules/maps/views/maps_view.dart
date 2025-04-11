@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:pubk_mobile2/app/modules/maps/controllers/maps_controller.dart';
 
@@ -11,10 +13,33 @@ class MapsView extends GetView<MapsController> {
   @override
   Widget build(BuildContext context) {
     final PopupController popupController = PopupController();
+    final primaryColor = HexColor('#2E7A35');
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Peta UMKM")
+        elevation: 0,
+        backgroundColor: primaryColor,
+        title: Text(
+          'Peta',
+          style: GoogleFonts.openSans(
+            textStyle: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        centerTitle: true,
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(Icons.notifications_outlined),
+        //     onPressed: () {
+        //       Get.snackbar(
+        //         'Notifikasi', 
+        //         'Fitur notifikasi akan segera hadir',
+        //         snackPosition: SnackPosition.BOTTOM,
+        //       );
+        //     },
+        //   ),
+        // ],
       ),
       body: Obx(() {
         if (controller.isLoading.value) {

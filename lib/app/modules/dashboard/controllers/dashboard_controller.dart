@@ -18,7 +18,7 @@ class DashboardController extends GetxController {
     const MapsView(),
     MeetingView(),
     // OperasionalView(),
-    const ProfileView(),
+    ProfileView(),
   ];
 
 }

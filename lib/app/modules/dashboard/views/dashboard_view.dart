@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:pubk_mobile2/app/modules/dashboard/controllers/dashboard_controller.dart';
 
 class DashboardView extends GetView<DashboardController> {
@@ -20,10 +21,10 @@ class DashboardView extends GetView<DashboardController> {
           onTap: (index) {
             controller.changeIndex(index);
           },
-          selectedItemColor: Colors.black, // Warna item yang dipilih
+          selectedItemColor: HexColor('#2E7A35'), // Warna item yang dipilih
           unselectedItemColor: Colors.grey, // Warna item yang tidak dipilih
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Dasbor'),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Beranda'),
             BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Peta'),
             BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Meeting'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),

@@ -70,4 +70,5 @@ class MeetingController extends GetxController {
       isLoading.value = false;
     }
   }
+
 }
