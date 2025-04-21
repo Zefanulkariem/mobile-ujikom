@@ -11,7 +11,7 @@ class ProfileController extends GetxController {
   final String? token = GetStorage().read('token');
   var isLoading = false.obs;
   
-  // Gunakan Rx untuk model ProfileResponse
+  // Rx untuk model ProfileResponse
   final Rx<ProfileResponse?> profile = Rx<ProfileResponse?>(null);
 
   @override
@@ -35,8 +35,8 @@ class ProfileController extends GetxController {
         contentType: "application/json",
       );
       
-      print("Response status: ${response.statusCode}");
-      print("Response body: ${response.body}");
+      // print("Response status: ${response.statusCode}");
+      // print("Response body: ${response.body}");
       
       if (response.status.hasError) {
         print("Error status: ${response.statusCode}");
@@ -44,7 +44,6 @@ class ProfileController extends GetxController {
         return;
       }
       
-      // Parsing response body
       dynamic jsonData;
       try {
         if (response.body is String) {
@@ -57,7 +56,7 @@ class ProfileController extends GetxController {
           try {
             if (jsonData['user'] is Map) {
               profile.value = ProfileResponse.fromJson(Map<String, dynamic>.from(jsonData['user']));
-              print("Profil berhasil diambil dari key: user");
+              // print("Profil berhasil diambil dari key: user");
               return;
             }
           } catch (e) {

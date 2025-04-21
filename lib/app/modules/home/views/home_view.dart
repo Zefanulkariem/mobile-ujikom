@@ -11,15 +11,15 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     HomeController controller = Get.put(HomeController());
     return Scaffold(
-      backgroundColor: HexColor('#ffff'),
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/PUBK_logo.png', // Ganti dengan path gambar lokal
-              width: 200, // Sesuaikan ukuran jika perlu
+              'assets/images/PUBK_logo.png',
+              width: 200,
               height: 200,
             ),
           ],

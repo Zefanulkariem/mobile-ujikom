@@ -12,10 +12,10 @@ class LoginView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     LoginController controller = Get.put(LoginController());
     return Scaffold(
-      backgroundColor: HexColor('#ffff'),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Pastikan semua teks rata kiri
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 70.0),

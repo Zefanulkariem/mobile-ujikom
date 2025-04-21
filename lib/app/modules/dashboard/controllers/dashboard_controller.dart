@@ -11,13 +11,18 @@ class DashboardController extends GetxController {
 
   void changeIndex(int index) {
     selectedIndex.value = index;
+
+    Get.nestedKey(1)?.currentState?.pushReplacement(
+    MaterialPageRoute(
+      builder: (_) => pages[index],
+    ),
+  );
   }
 
   final List<Widget> pages = [
     const IndexView(),
     const MapsView(),
     MeetingView(),
-    // OperasionalView(),
     ProfileView(),
   ];
 

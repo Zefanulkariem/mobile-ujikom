@@ -3,16 +3,18 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pubk_mobile2/app/modules/meeting/controllers/meeting_controller.dart';
+import 'package:pubk_mobile2/app/modules/meeting/views/meeting_add_view.dart';
 import 'package:pubk_mobile2/app/modules/meeting/views/meeting_detail_view.dart';
 
 class MeetingView extends GetView<MeetingController> {
-  final MeetingController controller = Get.put(MeetingController());
+  final MeetingController meetingController = Get.find();
   MeetingView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = HexColor('#6750A4');
     final secondaryColor = HexColor('#344767');
+    final warningColor = HexColor('#F5365C');
     
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -21,7 +23,7 @@ class MeetingView extends GetView<MeetingController> {
         backgroundColor: primaryColor,
         title: Text(
           "Daftar Meeting",
-          style: GoogleFonts.openSans(
+          style: GoogleFonts.montserrat(
             textStyle: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -29,24 +31,25 @@ class MeetingView extends GetView<MeetingController> {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: () {
-              // Implementasi filter meeting
-              Get.snackbar(
-                'Filter', 
-                'Filter meeting',
-                snackPosition: SnackPosition.BOTTOM,
-              );
-            },
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(
+        //       Icons.filter_list,
+        //       color: Colors.white,
+        //     ),
+        //     onPressed: () {
+        //       Get.snackbar(
+        //         'Filter', 
+        //         'Filter meeting',
+        //         snackPosition: SnackPosition.BOTTOM,
+        //       );
+        //     },
+        //   ),
+        // ],
       ),
       body: SafeArea(
         child: Column(
           children: [
-            // Header
             Container(
               width: double.infinity,
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -63,7 +66,7 @@ class MeetingView extends GetView<MeetingController> {
                   TextField(
                     decoration: InputDecoration(
                       hintText: "Cari meeting...",
-                      hintStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                      hintStyle: GoogleFonts.montserrat(color: Colors.white.withOpacity(0.7)),
                       prefixIcon: Icon(Icons.search, color: Colors.white.withOpacity(0.7)),
                       filled: true,
                       fillColor: Colors.white.withOpacity(0.2),
@@ -75,7 +78,7 @@ class MeetingView extends GetView<MeetingController> {
                     ),
                     style: const TextStyle(color: Colors.white),
                     onChanged: (value) {
-                      // Implementasi pencarian
+                      controller.searchMeetings(value);
                     },
                   ),
                 ],
@@ -84,22 +87,20 @@ class MeetingView extends GetView<MeetingController> {
             
             const SizedBox(height: 10),
             
-            // Meeting status tabs
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  _buildStatusTab("Semua", true, primaryColor),
-                  _buildStatusTab("Menunggu", false, primaryColor),
-                  _buildStatusTab("Terkonfirmasi", false, primaryColor),
-                  _buildStatusTab("Selesai", false, primaryColor),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 16),
+            //   child: Row(
+            //     children: [
+            //       _buildStatusTab("Semua", true, primaryColor),
+            //       _buildStatusTab("Menunggu", false, primaryColor),
+            //       _buildStatusTab("Terkonfirmasi", false, primaryColor),
+            //       _buildStatusTab("Selesai", false, primaryColor),
+            //     ],
+            //   ),
+            // ),
             
             const SizedBox(height: 10),
             
-            // Meeting list
             Expanded(
               child: Obx(() {
                 if (controller.isLoading.value) {
@@ -123,7 +124,7 @@ class MeetingView extends GetView<MeetingController> {
                         const SizedBox(height: 16),
                         Text(
                           "Tidak ada meeting tersedia",
-                          style: GoogleFonts.openSans(
+                          style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
                               fontSize: 16,
                               color: Colors.grey[600],
@@ -150,12 +151,9 @@ class MeetingView extends GetView<MeetingController> {
 
                 return ListView.builder(
                   padding: const EdgeInsets.all(12),
-                  itemCount: controller.meetingList.length,
+                  itemCount: controller.filteredMeetingList.length,
                   itemBuilder: (context, index) {
-                    final meeting = controller.meetingList[index];
-                    
-                    // Mendapatkan status badge untuk meeting
-                    final status = _getMeetingStatus(meeting);
+                    final meeting = controller.filteredMeetingList[index];
                     
                     return Card(
                       margin: const EdgeInsets.only(bottom: 12),
@@ -170,7 +168,6 @@ class MeetingView extends GetView<MeetingController> {
                         },
                         child: Column(
                           children: [
-                            // Header card dengan status badge
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               decoration: BoxDecoration(
@@ -186,7 +183,7 @@ class MeetingView extends GetView<MeetingController> {
                                   Expanded(
                                     child: Text(
                                       meeting['judul'] ?? "Tak Berjudul",
-                                      style: GoogleFonts.openSans(
+                                      style: GoogleFonts.montserrat(
                                         textStyle: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
@@ -200,20 +197,20 @@ class MeetingView extends GetView<MeetingController> {
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                     decoration: BoxDecoration(
-                                      color: status.color.withOpacity(0.1),
+                                      color: statusColor(meeting['status_verifikasi']).withOpacity(0.1),
                                       borderRadius: BorderRadius.circular(20),
                                       border: Border.all(
-                                        color: status.color,
+                                        color: statusColor(meeting['status_verifikasi']),
                                         width: 1,
                                       ),
                                     ),
                                     child: Text(
-                                      status.label,
-                                      style: GoogleFonts.openSans(
+                                      '${meeting['status_verifikasi'] ?? 'Menunggu'}',
+                                      style: GoogleFonts.montserrat(
                                         textStyle: TextStyle(
                                           fontSize: 11,
                                           fontWeight: FontWeight.bold,
-                                          color: status.color,
+                                          color: statusColor(meeting['status_verifikasi']),
                                         ),
                                       ),
                                     ),
@@ -222,13 +219,11 @@ class MeetingView extends GetView<MeetingController> {
                               ),
                             ),
                             
-                            // Body card dengan detail meeting
                             Padding(
                               padding: const EdgeInsets.all(16),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // UMKM info
                                   Row(
                                     children: [
                                       Container(
@@ -250,14 +245,14 @@ class MeetingView extends GetView<MeetingController> {
                                           children: [
                                             Text(
                                               "UMKM",
-                                              style: TextStyle(
+                                              style: GoogleFonts.montserrat(
                                                 fontSize: 12,
                                                 color: Colors.grey[600],
                                               ),
                                             ),
                                             Text(
                                               meeting['umkm']?['name'] ?? "Loading...",
-                                              style: const TextStyle(
+                                              style: GoogleFonts.montserrat(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
                                               ),
@@ -272,7 +267,6 @@ class MeetingView extends GetView<MeetingController> {
                                   
                                   const SizedBox(height: 12),
                                   
-                                  // Date and location in single row
                                   Row(
                                     children: [
                                       Expanded(
@@ -283,7 +277,7 @@ class MeetingView extends GetView<MeetingController> {
                                             Expanded(
                                               child: Text(
                                                 meeting['tanggal'] ?? '-',
-                                                style: TextStyle(color: Colors.grey[700]),
+                                                style: GoogleFonts.montserrat(color: Colors.grey[700]),
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                               ),
@@ -299,7 +293,7 @@ class MeetingView extends GetView<MeetingController> {
                                             Expanded(
                                               child: Text(
                                                 meeting['lokasi_meeting'] ?? '-',
-                                                style: TextStyle(color: Colors.grey[700]),
+                                                style: GoogleFonts.montserrat(color: Colors.grey[700]),
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                               ),
@@ -312,11 +306,9 @@ class MeetingView extends GetView<MeetingController> {
                                   
                                   const SizedBox(height: 16),
                                   
-                                  // Action buttons
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      // Investment info if available
                                       if (meeting['investor'] != null)
                                         Expanded(
                                           child: Row(
@@ -330,7 +322,7 @@ class MeetingView extends GetView<MeetingController> {
                                               Expanded(
                                                 child: Text(
                                                   "Diajukan oleh: ${meeting['investor']?['name'] ?? '-'}",
-                                                  style: TextStyle(
+                                                  style: GoogleFonts.montserrat(
                                                     fontSize: 12,
                                                     color: Colors.blue[700],
                                                   ),
@@ -341,13 +333,11 @@ class MeetingView extends GetView<MeetingController> {
                                             ],
                                           ),
                                         ),
-                                      
-                                      // Detail button
                                       ElevatedButton.icon(
-                                        icon: const Icon(Icons.arrow_forward, size: 16),
-                                        label: const Text("Detail"),
+                                        icon: const Icon(Icons.delete, size: 16),
+                                        label: const Text('Hapus'),
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: secondaryColor,
+                                          backgroundColor: warningColor,
                                           foregroundColor: Colors.white,
                                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                           shape: RoundedRectangleBorder(
@@ -356,7 +346,44 @@ class MeetingView extends GetView<MeetingController> {
                                           textStyle: const TextStyle(fontSize: 12),
                                         ),
                                         onPressed: () {
-                                          Get.to(() => MeetingDetailView(meeting: meeting));
+                                          Get.dialog(
+                                            AlertDialog(
+                                              title: Text(
+                                                'Hapus',
+                                                style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                                              ),
+                                              content: Text(
+                                                'Apakah Anda yakin ingin hapus data ini?',
+                                                style: GoogleFonts.poppins(),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () => Get.back(),
+                                                  child: Text(
+                                                    'Batal',
+                                                    style: GoogleFonts.poppins(color: Colors.grey),
+                                                  ),
+                                                ),
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    meetingController.deleteMeeting(meeting['id']);
+                                                    Get.back();
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                    backgroundColor: primaryColor,
+                                                    foregroundColor: Colors.white,
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(8),
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    'Hapus',
+                                                    style: GoogleFonts.poppins(),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
                                         },
                                       ),
                                     ],
@@ -377,15 +404,13 @@ class MeetingView extends GetView<MeetingController> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: primaryColor,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         onPressed: () {
-          // Implementasi tambah meeting baru
-          Get.snackbar(
-            'Tambah Meeting', 
-            'Menambahkan meeting baru',
-            snackPosition: SnackPosition.BOTTOM,
-          );
+          Get.to(() => MeetingAddView());
         },
-        child: const Icon(Icons.add),
       ),
     );
   }
@@ -406,7 +431,7 @@ class MeetingView extends GetView<MeetingController> {
           ),
           child: Text(
             label,
-            style: GoogleFonts.openSans(
+            style: GoogleFonts.montserrat(
               textStyle: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
@@ -420,28 +445,15 @@ class MeetingView extends GetView<MeetingController> {
     );
   }
   
-  StatusInfo _getMeetingStatus(Map<String, dynamic> meeting) {
-    // Logika untuk menentukan status meeting
-    // Ini contoh sederhana, sesuaikan dengan data dan logika aplikasi Anda
-    String status = meeting['status'] ?? 'pending';
-    
-    switch (status.toLowerCase()) {
-      case 'confirmed':
-        return StatusInfo(label: 'TERKONFIRMASI', color: Colors.green);
-      case 'completed':
-        return StatusInfo(label: 'SELESAI', color: Colors.blue);
-      case 'cancelled':
-        return StatusInfo(label: 'DIBATALKAN', color: Colors.red);
-      case 'pending':
+  Color statusColor(String? status) {
+    switch (status) {
+      case 'Disetujui':
+        return Colors.green;
+      case 'Ditolak':
+        return Colors.red;
+      case 'Menunggu':
       default:
-        return StatusInfo(label: 'MENUNGGU', color: Colors.orange);
+        return Colors.orange;
     }
   }
-}
-
-class StatusInfo {
-  final String label;
-  final Color color;
-  
-  StatusInfo({required this.label, required this.color});
 }

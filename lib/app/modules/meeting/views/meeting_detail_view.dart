@@ -10,7 +10,6 @@ class MeetingDetailView extends GetView<MeetingController> {
   
   @override
   Widget build(BuildContext context) {
-    // Tema warna utama
     final primaryColor = HexColor('#6750A4');
     final secondaryColor = HexColor('#344767');
     
@@ -21,7 +20,7 @@ class MeetingDetailView extends GetView<MeetingController> {
         backgroundColor: primaryColor,
         title: Text(
           "Detail Meeting",
-          style: GoogleFonts.openSans(
+          style: GoogleFonts.montserrat(
             textStyle: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -33,7 +32,6 @@ class MeetingDetailView extends GetView<MeetingController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header dengan judul meeting
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -49,7 +47,7 @@ class MeetingDetailView extends GetView<MeetingController> {
                 children: [
                   Text(
                     meeting['judul'] ?? "Meeting Tanpa Judul",
-                    style: GoogleFonts.openSans(
+                    style: GoogleFonts.montserrat(
                       textStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
@@ -63,7 +61,6 @@ class MeetingDetailView extends GetView<MeetingController> {
             
             const SizedBox(height: 20),
             
-            // Informasi utama dalam Card
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Card(
@@ -98,7 +95,6 @@ class MeetingDetailView extends GetView<MeetingController> {
             
             const SizedBox(height: 20),
             
-            // Informasi peserta
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Card(
@@ -113,7 +109,7 @@ class MeetingDetailView extends GetView<MeetingController> {
                     children: [
                       Text(
                         "Peserta Meeting",
-                        style: GoogleFonts.openSans(
+                        style: GoogleFonts.montserrat(
                           textStyle: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -145,7 +141,6 @@ class MeetingDetailView extends GetView<MeetingController> {
             
             const SizedBox(height: 20),
             
-            // Informasi tambahan
             if (meeting['deskripsi'] != null)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -161,7 +156,7 @@ class MeetingDetailView extends GetView<MeetingController> {
                       children: [
                         Text(
                           "Deskripsi",
-                          style: TextStyle(
+                          style: GoogleFonts.montserrat(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: primaryColor,
@@ -170,7 +165,7 @@ class MeetingDetailView extends GetView<MeetingController> {
                         const SizedBox(height: 10),
                         Text(
                           meeting['deskripsi'] ?? "Tidak ada deskripsi.",
-                          style: const TextStyle(
+                          style: GoogleFonts.montserrat(
                             fontSize: 14,
                             height: 1.5,
                           ),
@@ -185,69 +180,6 @@ class MeetingDetailView extends GetView<MeetingController> {
           ],
         ),
       ),
-      // bottomNavigationBar: Container(
-      //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      //   decoration: BoxDecoration(
-      //     color: Colors.white,
-      //     boxShadow: [
-      //       BoxShadow(
-      //         color: Colors.grey.withOpacity(0.2),
-      //         spreadRadius: 1,
-      //         blurRadius: 5,
-      //       ),
-      //     ],
-      //   ),
-      //   child: Row(
-      //     children: [
-      //       Expanded(
-      //         child: ElevatedButton.icon(
-      //           icon: const Icon(Icons.check_circle),
-      //           label: const Text("Konfirmasi Meeting"),
-      //           style: ElevatedButton.styleFrom(
-      //             backgroundColor: primaryColor,
-      //             foregroundColor: Colors.white,
-      //             padding: const EdgeInsets.symmetric(vertical: 12),
-      //             shape: RoundedRectangleBorder(
-      //               borderRadius: BorderRadius.circular(10),
-      //             ),
-      //           ),
-      //           onPressed: () {
-      //             // Implementasi konfirmasi meeting
-      //             Get.snackbar(
-      //               'Konfirmasi', 
-      //               'Meeting berhasil dikonfirmasi',
-      //               snackPosition: SnackPosition.BOTTOM,
-      //               backgroundColor: Colors.green,
-      //               colorText: Colors.white,
-      //             );
-      //           },
-      //         ),
-      //       ),
-      //       const SizedBox(width: 10),
-      //       ElevatedButton.icon(
-      //         icon: const Icon(Icons.edit),
-      //         label: const Text("Edit"),
-      //         style: ElevatedButton.styleFrom(
-      //           backgroundColor: Colors.white,
-      //           foregroundColor: primaryColor,
-      //           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-      //           shape: RoundedRectangleBorder(
-      //             borderRadius: BorderRadius.circular(10),
-      //             side: BorderSide(color: primaryColor),
-      //           ),
-      //         ),
-      //         onPressed: () {
-      //           // Implementasi edit meeting
-      //           Get.snackbar(
-      //             'Edit', 
-      //             'Mengedit detail meeting',
-      //             snackPosition: SnackPosition.BOTTOM,
-      //           );
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
   

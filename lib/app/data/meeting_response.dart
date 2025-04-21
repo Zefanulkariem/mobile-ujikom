@@ -31,6 +31,7 @@ class MeetingData {
   int? id;
   int? idInvestor;
   int? idUmkm;
+  int? pemilikUmkm;
   String? judul;
   String? lokasiMeeting;
   String? tanggal;

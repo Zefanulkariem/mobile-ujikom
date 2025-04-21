@@ -17,11 +17,18 @@ class LoginController extends GetxController {
       'password': passwordController.text,
     });
 
-    print("Response dari API: ${response.body}");
+    // print("Response dari API: ${response.body}");
 
     if (response.statusCode == 200) {
       String token = response.body['access_token'];
       authToken.write('token', token);
+
+      // authToken.write('id_investor', response.body['investor']['id']);
+      // if (response.body['id_investor'] != null) {
+      //   authToken.write('userId', response.body['user']['id']);
+      //   print("User ID tersimpan: ${authToken.read('userId')}");
+      // }
+
       print("Token setelah login: ${GetStorage().read('token')}");// Cek token 
       Get.offAll(() => const DashboardView());
     } else {
