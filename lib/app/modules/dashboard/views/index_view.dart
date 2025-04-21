@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pubk_mobile2/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:pubk_mobile2/app/modules/maps/controllers/maps_controller.dart';
 import 'package:pubk_mobile2/app/modules/meeting/controllers/meeting_controller.dart';
@@ -17,7 +16,6 @@ class IndexView extends GetView<MeetingController> {
     final MeetingController controllerMeet = Get.put(MeetingController());
     final primaryColor = HexColor('#2E7A35');
     final secondaryColor = HexColor('#344767');
-    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: Colors.grey[100],

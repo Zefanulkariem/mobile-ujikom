@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -9,6 +8,7 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     HomeController controller = Get.put(HomeController());
     return Scaffold(
       backgroundColor: Colors.white,

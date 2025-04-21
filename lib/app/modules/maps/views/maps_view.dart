@@ -116,7 +116,7 @@ class MapsView extends GetView<MapsController> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (umkm.image != null && umkm.image.isNotEmpty)
+                            if (umkm.image.isNotEmpty)
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.network(
